@@ -16,10 +16,10 @@ app.use(cors({
 }));
 
 // Serve frontend (optional for local use)
-app.use(express.static(path.join(__dirname, 'public')));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
 
 // Utility functions
 async function fetchJSON(url, headers = {}) {
