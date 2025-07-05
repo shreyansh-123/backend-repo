@@ -8,12 +8,11 @@ const app = express();
 app.use(express.json());
 
 // ✅ Static CORS config for GitHub Pages
-app.use(cors({
-  origin: 'https://shreyansh-123.github.io',
-  methods: ['GET'],
-  optionsSuccessStatus: 200,
-  allowedHeaders: ['Content-Type']
-}));
+const corsOptions = {
+  origin: 'https://shreyansh-123.github.io',  // Your GitHub Pages domain
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));  // Use CORS with the specified options
 
 // Serve frontend (optional for local use)
 // app.use(express.static(path.join(__dirname, 'public')));
