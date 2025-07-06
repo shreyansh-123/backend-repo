@@ -15,7 +15,11 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+
 app.use(cors(corsOptions));  // Use CORS with the specified options
+
+// Handle preflight OPTIONS requests
+app.options('*', cors(corsOptions));
 
 // Serve frontend (optional for local use)
 // app.use(express.static(path.join(__dirname, 'public')));
