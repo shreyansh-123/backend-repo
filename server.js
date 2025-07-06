@@ -8,18 +8,12 @@ const app = express();
 app.use(express.json());
 
 // ✅ Static CORS config for GitHub Pages
-const corsOptions = {
+app.use(cors({
   origin: 'https://shreyansh-123.github.io',
   methods: ['GET'],
-  allowedHeaders: ['Content-Type'], // ✅ important!
-  optionsSuccessStatus: 200
-};
-
-
-app.use(cors(corsOptions));  // Use CORS with the specified options
-
-// Handle preflight OPTIONS requests
-// app.options('*', cors(corsOptions));
+  optionsSuccessStatus: 200,
+  allowedHeaders: ['Content-Type']
+}));
 
 // Serve frontend (optional for local use)
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -29,7 +23,9 @@ app.use(cors(corsOptions));  // Use CORS with the specified options
 
 // Utility functions
 async function fetchJSON(url, headers = {}) {
+  
   const res = await fetch(url, { headers });
+  console.log('hello');
   return res.json();
 }
 function isValidIP(ioc) {
@@ -40,6 +36,7 @@ function isValidURL(ioc) {
     new URL(ioc);
     return true;
   } catch {
+      console.log('hello from isValidURL');
     return false;
   }
 }
@@ -143,7 +140,7 @@ const lookupHandlers = {
 app.get('/lookup', async (req, res) => {
   const queryParam = req.query.query || '';
   const iocs = queryParam.split(',').map(i => i.trim()).filter(i => i);
-
+console.log('test',queryParam);
   const keys = {
     vt: req.query.vt,
     abuse: req.query.abuse,
@@ -194,13 +191,14 @@ app.get('/lookup', async (req, res) => {
         }
 
       } catch (err) {
+        console.log('errormsg', err);
         result.details[source] = { error: err.message };
       }
     }
 
     results.push(result);
   }
-
+  console.log(results)
   res.json({ results });
 });
 
